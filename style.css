@@ -25,6 +25,10 @@ body {
   vertical-align: middle;
   height: 60px;
 }
+.yoon img {
+  vertical-align: middle;
+  height: 150px;
+}
 
 .hero {
   background-color: #007bff;
