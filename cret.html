@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>증서 조회 - 더불어사랑당</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">
+      <a href="index.html"><img src="img/logo.png" alt="더불어사랑당 로고" height="40" /></a>
+    </div>
+    <nav class="nav-menu">
+      <a href="index.html">홈</a>
+      <a href="당소개.html">당소개</a>
+      <a href="#">소식</a>
+      <a href="#">공약</a>
+      <a href="#">후원하기</a>
+      <a href="#">참여하기</a>
+    </nav>
+  </header>
+
+  <section class="news">
+    <h2>증서 조회</h2>
+    <form id="searchForm">
+      <label>증서번호: <input type="text" id="certNumber" required /></label><br /><br />
+      <label>이름: <input type="text" id="recipientName" required /></label><br /><br />
+      <button type="submit" style="padding: 8px 16px; background-color: #007bff; color: white; border: none; border-radius: 5px;">조회</button>
+    </form>
+
+    <div id="result" style="margin-top: 30px;"></div>
+  </section>
+
+  <script>
+    const data = {
+      "001": {
+        name: "김민준",
+        cert: "images/cert001.jpg",
+        proof: "images/cert001_proof.jpg"
+      },
+      "002": {
+        name: "이지은",
+        cert: "images/cert002.jpg",
+        proof: "images/cert002_proof.jpg"
+      }
+    };
+
+    document.getElementById("searchForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const number = document.getElementById("certNumber").value.trim();
+      const name = document.getElementById("recipientName").value.trim();
+      const resultDiv = document.getElementById("result");
+      const entry = data[number];
+
+      if (entry && entry.name === name) {
+        resultDiv.innerHTML = `
+          <h3>조회 결과</h3>
+          <p><strong>${entry.name}</strong>님의 증서입니다:</p>
+          <img src="${entry.cert}" alt="증서 이미지" style="max-width:100%; margin-bottom:20px;"><br>
+          <img src="${entry.proof}" alt="증명서 이미지" style="max-width:100%;">
+        `;
+      } else {
+        resultDiv.innerHTML = "<p style='color:red;'>일치하는 증서를 찾을 수 없습니다.</p>";
+      }
+    });
+  </script>
+</body>
+</html>
