@@ -21,49 +21,28 @@
     </nav>
   </header>
 
-  <section class="news">
-    <h2>증서 조회</h2>
-    <form id="searchForm">
-      <label>증서번호: <input type="text" id="certNumber" required /></label><br /><br />
-      <label>이름: <input type="text" id="recipientName" required /></label><br /><br />
-      <button type="submit" style="padding: 8px 16px; background-color: #007bff; color: white; border: none; border-radius: 5px;">조회</button>
-    </form>
+<script>
+  async function loadCertificate() {
+    const certNum = document.getElementById("certNum").value.trim();
+    const certName = document.getElementById("certName").value.trim();
 
-    <div id="result" style="margin-top: 30px;"></div>
-  </section>
+    try {
+      const res = await fetch("certificates.json");
+      const data = await res.json();
 
-  <script>
-    const data = {
-      "001": {
-        name: "김민준",
-        cert: "images/cert001.jpg",
-        proof: "images/cert001_proof.jpg"
-      },
-      "002": {
-        name: "이지은",
-        cert: "images/cert002.jpg",
-        proof: "images/cert002_proof.jpg"
-      }
-    };
-
-    document.getElementById("searchForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const number = document.getElementById("certNumber").value.trim();
-      const name = document.getElementById("recipientName").value.trim();
-      const resultDiv = document.getElementById("result");
-      const entry = data[number];
-
-      if (entry && entry.name === name) {
-        resultDiv.innerHTML = `
-          <h3>조회 결과</h3>
-          <p><strong>${entry.name}</strong>님의 증서입니다:</p>
-          <img src="${entry.cert}" alt="증서 이미지" style="max-width:100%; margin-bottom:20px;"><br>
-          <img src="${entry.proof}" alt="증명서 이미지" style="max-width:100%;">
-        `;
+      const cert = data[certNum];
+      if (cert && cert.name === certName) {
+        document.getElementById("certImage").src = cert.cert;
+        document.getElementById("proofImage").src = cert.proof;
+        document.getElementById("result").style.display = "block";
       } else {
-        resultDiv.innerHTML = "<p style='color:red;'>일치하는 증서를 찾을 수 없습니다.</p>";
+        alert("일치하는 증서가 없스비다.");
       }
-    });
-  </script>
+    } catch (err) {
+      alert("데이터를 불러오지 못했습니다.");
+      console.error(err);
+    }
+  }
+</script>
 </body>
 </html>
