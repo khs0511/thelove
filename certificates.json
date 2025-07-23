@@ -1,0 +1,12 @@
+{
+  "2025-001": {
+    "name": "김민준",
+    "cert": "images/cert001.jpg",
+    "proof": "images/cert001_proof.jpg"
+  },
+  "2025-002": {
+    "name": "이은서",
+    "cert": "images/cert002.jpg",
+    "proof": "images/cert002_proof.jpg"
+  }
+}
