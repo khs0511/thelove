@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>증서 조회 - 더불어사랑당</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
 <body>
   <header class="topbar">
     <div class="logo">
@@ -21,28 +13,42 @@
     </nav>
   </header>
 
-<script>
-  async function loadCertificate() {
-    const certNum = document.getElementById("certNum").value.trim();
-    const certName = document.getElementById("certName").value.trim();
+  <main>
+    <h1>증서 조회</h1>
+    <label for="certNum">증서 번호:</label>
+    <input type="text" id="certNum" /><br />
+    <label for="certName">이름:</label>
+    <input type="text" id="certName" /><br />
+    <button onclick="loadCertificate()">조회</button>
 
-    try {
-      const res = await fetch("certificates.json");
-      const data = await res.json();
+    <div id="result" style="display:none;">
+      <h2>증서 조회 결과</h2>
+      <img id="certImage" alt="증서 이미지" /><br />
+      <img id="proofImage" alt="증명 이미지" />
+    </div>
+  </main>
 
-      const cert = data[certNum];
-      if (cert && cert.name === certName) {
-        document.getElementById("certImage").src = cert.cert;
-        document.getElementById("proofImage").src = cert.proof;
-        document.getElementById("result").style.display = "block";
-      } else {
-        alert("일치하는 증서가 없스비다.");
+  <script>
+    async function loadCertificate() {
+      const certNum = document.getElementById("certNum").value.trim();
+      const certName = document.getElementById("certName").value.trim();
+
+      try {
+        const res = await fetch("certificates.json");
+        const data = await res.json();
+
+        const cert = data[certNum];
+        if (cert && cert.name === certName) {
+          document.getElementById("certImage").src = cert.cert;
+          document.getElementById("proofImage").src = cert.proof;
+          document.getElementById("result").style.display = "block";
+        } else {
+          alert("일치하는 증서가 없습니다.");
+        }
+      } catch (err) {
+        alert("데이터를 불러오지 못했습니다.");
+        console.error(err);
       }
-    } catch (err) {
-      alert("데이터를 불러오지 못했습니다.");
-      console.error(err);
     }
-  }
-</script>
+  </script>
 </body>
-</html>
